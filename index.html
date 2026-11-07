@@ -1,0 +1,407 @@
+<title>Raymond Rams Title Race</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column read like a matchday programme — headline odds, the table, the games left, then the projection grid. */
+:root {
+  --bg: #F2F4EF; --surface: #FFFFFF; --ink: #15221A; --muted: #5B695F; --line: #D6DDD3;
+  --pitch: #1D6A3D; --rams: #B5761A; --rams-soft: #F6E9D3;
+  --win: #2E7C49; --draw: #7C8781; --loss: #B3453A;
+  --display: "Saira Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1611; --surface: #152019; --ink: #E5ECE6; --muted: #98A79D; --line: #29362E;
+  --pitch: #53B57A; --rams: #E3A94C; --rams-soft: #3A2E18;
+  --win: #5CC184; --draw: #8E9A93; --loss: #E57D72; color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #0E1611; --surface: #152019; --ink: #E5ECE6; --muted: #98A79D; --line: #29362E;
+  --pitch: #53B57A; --rams: #E3A94C; --rams-soft: #3A2E18;
+  --win: #5CC184; --draw: #8E9A93; --loss: #E57D72; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 40px; }
+h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.05; }
+h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: .01em; }
+.eyebrow { font: 600 .78rem/1.2 var(--body); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.note { color: var(--muted); font-size: .88rem; max-width: 65ch; margin: 0; }
+section { display: grid; gap: 14px; min-width: 0; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 12px 32px; align-items: end; }
+.hero h1 { font-size: clamp(2.2rem, 7vw, 3.4rem); font-weight: 800; grid-column: 1 / -1; }
+.hero h1 span { color: var(--rams); }
+.big { font: 800 clamp(4.5rem, 18vw, 7.5rem)/.85 var(--display); color: var(--rams); font-variant-numeric: tabular-nums; }
+.big small { font-size: .38em; font-weight: 600; color: var(--muted); display: block; letter-spacing: .02em; margin-top: 8px; }
+.scen { display: grid; gap: 8px; min-width: 0; }
+.scen .row { display: grid; grid-template-columns: 4.5rem 1fr 3.2rem; align-items: center; gap: 10px; }
+.scen .lbl { font: 600 .95rem var(--display); text-transform: uppercase; letter-spacing: .05em; }
+.bar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--rams); }
+.scen .pct { font: 700 1.1rem var(--display); text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) { .hero { grid-template-columns: 1fr; } }
+
+/* Tables */
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 10px; text-align: right; white-space: nowrap; }
+th { font: 600 .74rem var(--body); text-transform: uppercase; letter-spacing: .07em; color: var(--muted); border-bottom: 1px solid var(--line); }
+td { border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th.l, td.l { text-align: left; }
+td.team { font-weight: 600; }
+td.team small { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+td.pos { font: 700 1.05rem var(--display); color: var(--muted); width: 2rem; }
+@media (max-width: 560px) { td.team small { display: none; } th, td { padding: 8px 6px; } }
+td.pts { font: 700 1.15rem var(--display); }
+tr.focus td { background: var(--rams-soft); }
+tr.focus td.pos { color: var(--rams); }
+td.heat { width: 2.4rem; padding: 0; text-align: center; font-size: .78rem; }
+td.heat span { display: block; padding: 9px 0; }
+
+/* Season bracket: one column per round, final round is pickable */
+.bracket { overflow-x: auto; padding-bottom: 6px; }
+.rounds { display: grid; grid-auto-flow: column; grid-auto-columns: 200px; gap: 14px; align-items: start; }
+.round { display: grid; gap: 8px; }
+.round h3 { margin: 0; font: 700 1.05rem var(--display); text-transform: uppercase; letter-spacing: .04em; }
+.round .lead { font-size: .78rem; color: var(--muted); min-height: 2.4em; }
+.round .lead b { color: var(--ink); font-weight: 600; }
+.mcard { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.mcard.focus { border-color: var(--rams); box-shadow: inset 3px 0 0 var(--rams); }
+.side { box-sizing: border-box; display: flex; justify-content: space-between; gap: 8px; padding: 6px 10px; font-size: .86rem; color: var(--muted); width: 100%; border: 0; background: none; font-family: inherit; text-align: left; }
+.side + .side { border-top: 1px solid var(--line); }
+.side b { font: 700 1rem var(--display); font-variant-numeric: tabular-nums; }
+.side.win { color: var(--ink); font-weight: 600; }
+.side.win b { color: var(--win); }
+.side.draw { color: var(--ink); }
+.moved { border-top: 1px dashed var(--line); padding: 3px 10px; font-size: .72rem; color: var(--muted); }
+button.side { cursor: pointer; }
+button.side:hover { background: var(--bg); }
+button.side:focus-visible { outline: 2px solid var(--pitch); outline-offset: -2px; }
+button.side b { font-size: .85rem; color: var(--muted); }
+button.side.win b { color: var(--win); }
+.champ { background: var(--rams-soft); border: 1px solid var(--rams); border-radius: 6px; padding: 14px; display: grid; gap: 6px; }
+.champ .name { font: 800 1.5rem/1.05 var(--display); }
+.champ .p { font: 700 2.4rem/1 var(--display); color: var(--rams); font-variant-numeric: tabular-nums; }
+.champ ol { margin: 4px 0 0; padding: 0; list-style: none; font-size: .82rem; color: var(--muted); }
+
+/* Remaining games */
+.games { display: grid; gap: 12px; }
+.game { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: grid; gap: 10px; }
+.game.focus { border-color: var(--rams); }
+.game header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; align-items: baseline; }
+.game .vs { font: 700 1.25rem var(--display); }
+.game .vs b { color: var(--muted); font-weight: 500; padding: 0 .35em; }
+.odds { display: flex; height: 22px; border-radius: 4px; overflow: hidden; font: 600 .75rem/22px var(--body); color: #fff; }
+.odds span { text-align: center; min-width: 0; overflow: hidden; }
+.odds .h { background: var(--win); } .odds .d { background: var(--draw); } .odds .a { background: var(--loss); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: .85rem; cursor: pointer; background: var(--bg); }
+.seg input:checked + label { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg input:focus-visible + label { outline: 2px solid var(--pitch); outline-offset: 2px; }
+button.reset { justify-self: start; font: 600 .85rem var(--body); color: var(--pitch); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+
+/* Results */
+.results { display: grid; gap: 6px; }
+.res { display: grid; grid-template-columns: 1.8rem 4.6rem 1fr auto; gap: 10px; align-items: center; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+.res .wdl { font: 800 .95rem/1.8rem var(--display); color: #fff; text-align: center; border-radius: 4px; }
+.res .W { background: var(--win); } .res .D { background: var(--draw); } .res .L { background: var(--loss); }
+.res .date { color: var(--muted); font-size: .85rem; }
+.res .score { font: 700 1.15rem var(--display); font-variant-numeric: tabular-nums; }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow" id="ctx" style="grid-column:1/-1"></div>
+    <h1>Can the <span>Rams</span> win Coastal Red?</h1>
+    <div class="big num" id="big"></div>
+    <div class="eyebrow" id="sub" style="grid-column:1/-1"></div>
+    <div class="scen" id="scen"></div>
+  </header>
+
+  <section id="final" hidden></section>
+
+  <section>
+    <h2>Standings</h2>
+    <div class="tbl"><table id="standings"></table></div>
+    <p class="note" id="tbnote"></p>
+  </section>
+
+  <section>
+    <h2>Season bracket</h2>
+    <p class="note">Every league game, round by round, then the top-4 playoffs. Rams games are outlined. In Round 7, tap a team to pick them to win, tap again to clear. Draws can be picked below.</p>
+    <div class="bracket"><div class="rounds" id="bracket"></div></div>
+  </section>
+
+  <section>
+    <h2>Games left</h2>
+    <p class="note">Games with no score on GotSport yet, including any already played. Bars show each side's chances from the model. Pick a result to see how it changes the race. Scores in the simulation still follow the model, so goal difference stays realistic.</p>
+    <div class="games" id="games"></div>
+    <button class="reset" id="reset" type="button">Clear picks</button>
+  </section>
+
+  <section>
+    <h2>Projected finish</h2>
+    <div class="tbl"><table id="proj"></table></div>
+    <p class="note">Share of 20,000 simulated seasons, playoffs included, given the picks above. Columns #1–#4 are playoff seeds.</p>
+  </section>
+
+  <section>
+    <h2>Rams results</h2>
+    <div class="results" id="results"></div>
+  </section>
+
+  <p class="note" id="foot"></p>
+</div>
+
+<script id="core">
+const D = {"asOf": "2026-11-07", "event": "New Hampshire Soccer League - Fall 2026 (SCHOOL YEAR)", "division": "U12B Coastal Red", "focus": 4360002, "teams": [{"id": 4360002, "team": "Raymond Soccer Club U12 Boys", "club": "Raymond Soccer Club", "short": "Raymond Rams", "gsPts": 18, "gsPlace": 1}, {"id": 4374560, "team": "U12 26/27 Boys Premier", "club": "York Soccer Club", "short": "York SC", "gsPts": 16, "gsPlace": 2}, {"id": 4352535, "team": "U12 Boys - Fall 2026", "club": "Warriors FC-Hampton Youth Association", "short": "Warriors FC", "gsPts": 16, "gsPlace": 3}, {"id": 4362331, "team": "U12 Boys 1", "club": "Garrison City FC", "short": "Garrison City", "gsPts": 14, "gsPlace": 4}, {"id": 4342876, "team": "PCSC U-12 Boys Black", "club": "Portsmouth City SC", "short": "Portsmouth City", "gsPts": 9, "gsPlace": 5}, {"id": 4331313, "team": "U12 Boys", "club": "Wells Soccer Club", "short": "Wells SC", "gsPts": 6, "gsPlace": 6}, {"id": 4305716, "team": "Boys U12 Blue", "club": "Exeter Youth Soccer Association - FC Exeter", "short": "FC Exeter", "gsPts": 3, "gsPlace": 7}, {"id": 4355101, "team": "ORU Boys U12 (Fall 26)", "club": "Oyster River United", "short": "Oyster River", "gsPts": 0, "gsPlace": 8}], "played": [[4360002, 4374560, 4, 1, "2026-10-24"], [4360002, 4331313, 8, 1, "2026-09-26"], [4360002, 4362331, 6, 3, "2026-09-12"], [4360002, 4355101, 9, 1, "2026-10-03"], [4352535, 4331313, 7, 0, "2026-10-31"], [4352535, 4362331, 1, 1, "2026-09-26"], [4352535, 4374560, 1, 2, "2026-09-12"], [4352535, 4360002, 2, 0, "2026-10-17"], [4374560, 4355101, 8, 1, "2026-10-31"], [4374560, 4342876, 4, 3, "2026-09-26"], [4374560, 4305716, 4, 0, "2026-10-17"], [4331313, 4374560, 0, 5, "2026-09-19"], [4331313, 4342876, 0, 6, "2026-10-03"], [4331313, 4362331, 0, 2, "2026-10-24"], [4362331, 4355101, 10, 3, "2026-09-19"], [4362331, 4374560, 3, 3, "2026-10-03"], [4362331, 4305716, 7, 1, "2026-10-31"], [4355101, 4305716, 2, 3, "2026-10-15"], [4355101, 4331313, 3, 5, "2026-10-17"], [4355101, 4342876, 4, 9, "2026-09-12"], [4355101, 4352535, 0, 7, "2026-10-24"], [4305716, 4360002, 0, 6, "2026-09-19"], [4305716, 4331313, 1, 5, "2026-09-12"], [4342876, 4360002, 0, 1, "2026-10-31"], [4342876, 4362331, 2, 5, "2026-10-17"], [4342876, 4352535, 1, 3, "2026-09-19"], [4305716, 4342876, 3, 10, "2026-10-24"], [4305716, 4352535, 1, 12, "2026-10-03"]], "remaining": [], "playoffs": {"semisDate": "2026-11-07", "finalDate": "2026-11-08", "finalAt": "3:45 PM \u00b7 NHSA State Fields, Field 3A", "semis": [{"home": 4360002, "away": 4362331, "homeScore": 3, "awayScore": 1, "winner": 4360002, "source": "team-reported"}, {"home": 4374560, "away": 4352535, "homeScore": null, "awayScore": null, "winner": 4374560, "source": "team-reported"}], "final": {"home": 4360002, "away": 4374560}}};
+const T = Object.fromEntries(D.teams.map(t => [t.id, t]));
+const IDS = D.teams.map(t => t.id);
+
+// League table. Ties: points, then head-to-head points among the tied teams, then goal difference, then goals for.
+// GotSport caps goal difference at 4 per game; its Coastal Red table only adds up with the cap.
+const GD_CAP = 4;
+function standings(games) {
+  const r = Object.fromEntries(IDS.map(id => [id, { id, gp: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, pts: 0 }]));
+  for (const [h, a, hs, as] of games) {
+    const H = r[h], A = r[a], gd = Math.max(-GD_CAP, Math.min(GD_CAP, hs - as));
+    H.gp++; A.gp++; H.gf += hs; H.ga += as; A.gf += as; A.ga += hs; H.gd += gd; A.gd -= gd;
+    if (hs > as) { H.w++; A.l++; H.pts += 3; } else if (hs < as) { A.w++; H.l++; A.pts += 3; } else { H.d++; A.d++; H.pts++; A.pts++; }
+  }
+  const rows = Object.values(r).sort((x, y) => y.pts - x.pts), out = [];
+  for (let i = 0; i < rows.length;) {
+    let j = i; while (j < rows.length && rows[j].pts === rows[i].pts) j++;
+    const grp = rows.slice(i, j);
+    if (grp.length > 1) {
+      const set = new Set(grp.map(g => g.id)), h2h = Object.fromEntries(grp.map(g => [g.id, 0]));
+      for (const [h, a, hs, as] of games) if (set.has(h) && set.has(a)) {
+        if (hs > as) h2h[h] += 3; else if (hs < as) h2h[a] += 3; else { h2h[h]++; h2h[a]++; }
+      }
+      grp.sort((x, y) => h2h[y.id] - h2h[x.id] || y.gd - x.gd || y.gf - x.gf || T[x.id].short.localeCompare(T[y.id].short));
+    }
+    out.push(...grp); i = j;
+  }
+  return out;
+}
+
+// Poisson goals model: expected goals = league rate x attack x opponent defence, fitted on played games.
+// Two pseudo-games against an average side per team keep 6-game samples from producing extreme ratings.
+function fit(games, prior = 2) {
+  // A blowout counts for no more than a GD_CAP-goal win, the same limit GotSport puts on goal difference.
+  games = games.map(([h, a, hs, as]) => [h, a, Math.min(hs, as + GD_CAP), Math.min(as, hs + GD_CAP)]);
+  const n = games.length, mu = games.reduce((s, g) => s + g[2] + g[3], 0) / (2 * n);
+  const att = Object.fromEntries(IDS.map(id => [id, 1])), def = { ...att };
+  for (let it = 0; it < 100; it++) {
+    for (const key of ['att', 'def']) {
+      const num = Object.fromEntries(IDS.map(id => [id, prior * mu])), den = { ...num };
+      for (const [h, a, hs, as] of games) {
+        if (key === 'att') { num[h] += hs; den[h] += mu * def[a]; num[a] += as; den[a] += mu * def[h]; }
+        else { num[h] += as; den[h] += mu * att[a]; num[a] += hs; den[a] += mu * att[h]; }
+      }
+      const m = key === 'att' ? att : def;
+      for (const id of IDS) m[id] = num[id] / den[id];
+    }
+    const mean = IDS.reduce((s, id) => s + att[id], 0) / IDS.length;
+    for (const id of IDS) { att[id] /= mean; def[id] *= mean; }
+  }
+  return { mu, att, def, lam: (h, a) => mu * att[h] * def[a] };
+}
+
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function poisson(l, rand) { const L = Math.exp(-l); let k = 0, p = 1; do { k++; p *= rand(); } while (p > L); return k - 1; }
+const outcome = (hs, as) => hs > as ? 'H' : hs < as ? 'A' : 'D';
+
+function odds(model, h, a) {
+  const lh = model.lam(h, a), la = model.lam(a, h), pmf = (l, k) => Math.exp(-l) * l ** k / [...Array(k).keys()].reduce((f, i) => f * (i + 1), 1);
+  const o = { H: 0, D: 0, A: 0 };
+  for (let i = 0; i <= 20; i++) for (let j = 0; j <= 20; j++) o[outcome(i, j)] += pmf(lh, i) * pmf(la, j);
+  return o;
+}
+
+// locks: { gameIndex: 'H' | 'D' | 'A' } for picked results; unpicked games are drawn from the model.
+// Then the top 4 play semis (1v4, 2v3) and a final; a drawn playoff game is a coin flip, standing in for penalties.
+function simulate(model, locks, n = 20000, seed = 1) {
+  const rand = rng(seed), pos = Object.fromEntries(IDS.map(id => [id, Array(IDS.length).fill(0)])), zero = () => Object.fromEntries(IDS.map(id => [id, 0]));
+  const pts = zero(), finA = zero(), finB = zero(), champ = zero();
+  const ko = (h, a) => { const hs = poisson(model.lam(h, a), rand), as = poisson(model.lam(a, h), rand); return hs > as ? h : as > hs ? a : rand() < .5 ? h : a; };
+  const semi = (x, y) => { const s = D.playoffs.semis.find(s => s.winner && [s.home, s.away].includes(x) && [s.home, s.away].includes(y)); return s ? s.winner : ko(x, y); };
+  for (let k = 0; k < n; k++) {
+    const games = D.played.slice();
+    D.remaining.forEach(([h, a], gi) => {
+      const want = locks[gi]; let hs, as, tries = 0;
+      do { hs = poisson(model.lam(h, a), rand); as = poisson(model.lam(a, h), rand); } while (want && outcome(hs, as) !== want && ++tries < 200);
+      if (want && outcome(hs, as) !== want) [hs, as] = { H: [1, 0], D: [1, 1], A: [0, 1] }[want];
+      games.push([h, a, hs, as]);
+    });
+    const st = standings(games);
+    st.forEach((row, p) => { pos[row.id][p]++; pts[row.id] += row.pts; });
+    const a = semi(st[0].id, st[3].id), b = semi(st[1].id, st[2].id);
+    finA[a]++; finB[b]++; champ[ko(a, b)]++;
+  }
+  for (const id of IDS) { pos[id] = pos[id].map(c => c / n); pts[id] /= n; finA[id] /= n; finB[id] /= n; champ[id] /= n; }
+  return { pos, pts, finA, finB, champ };
+}
+</script>
+
+<script>
+const MODEL = fit(D.played);
+const FOCUS_GAME = D.remaining.findIndex(g => g[0] === D.focus || g[1] === D.focus);
+const locks = {};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pct = p => p <= 0 ? '–' : p < .005 ? '<1%' : p > .995 && p < 1 ? '>99%' : Math.round(p * 100) + '%';
+const fmtDate = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Date TBA';
+const teamCell = id => `<td class="l team">${esc(T[id].short)}<small>${esc(T[id].team)}</small></td>`;
+const focusShort = T[D.focus].short;
+
+function renderStatic() {
+  document.getElementById('ctx').textContent = `${D.event} · ${D.division}`;
+  const rows = standings(D.played);
+  document.getElementById('standings').innerHTML =
+    '<tr><th></th><th class="l">Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th></tr>' +
+    rows.map((r, i) => `<tr class="${r.id === D.focus ? 'focus' : ''}"><td class="pos">${i + 1}</td>${teamCell(r.id)}<td>${r.gp}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${r.gf}</td><td>${r.ga}</td><td>${(r.gd > 0 ? '+' : '') + r.gd}</td><td class="pts">${r.pts}</td></tr>`).join('');
+  document.getElementById('tbnote').textContent = 'Win 3, draw 1. Goal difference counts at most 4 per game, as on GotSport. Ties are broken by head-to-head points, then goal difference, then goals scored. That order matches GotSport\'s table, but the official tiebreaker page needs a login, so I couldn\'t confirm it. The top 4 make the playoffs.';
+
+  document.getElementById('games').innerHTML = D.remaining.map(([h, a, date, time, venue], gi) => {
+    const o = odds(MODEL, h, a), opt = (v, label) =>
+      `<input type="radio" name="g${gi}" id="g${gi}-${v}" value="${v}"${v === '' ? ' checked' : ''}><label for="g${gi}-${v}">${esc(label)}</label>`;
+    return `<div class="game${gi === FOCUS_GAME ? ' focus' : ''}">
+      <header><div class="vs">${esc(T[h].short)}<b>v</b>${esc(T[a].short)}</div><div class="eyebrow">${[fmtDate(date), time, venue].filter(Boolean).map(esc).join(' · ')}</div></header>
+      <div class="note">Expected score ${MODEL.lam(h, a).toFixed(1)}–${MODEL.lam(a, h).toFixed(1)}</div>
+      <div class="odds" role="img" aria-label="${esc(T[h].short)} win ${pct(o.H)}, draw ${pct(o.D)}, ${esc(T[a].short)} win ${pct(o.A)}">
+        <span class="h" style="width:${o.H * 100}%">${o.H > .12 ? pct(o.H) : ''}</span><span class="d" style="width:${o.D * 100}%">${o.D > .12 ? pct(o.D) : ''}</span><span class="a" style="width:${o.A * 100}%">${o.A > .12 ? pct(o.A) : ''}</span>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Result for ${esc(T[h].short)} v ${esc(T[a].short)}">${opt('', 'Simulate')}${opt('H', T[h].short + ' win')}${opt('D', 'Draw')}${opt('A', T[a].short + ' win')}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('results').innerHTML = D.played.filter(g => g[0] === D.focus || g[1] === D.focus).sort((x, y) => y[4].localeCompare(x[4])).map(([h, a, hs, as, date]) => {
+    const home = h === D.focus, us = home ? hs : as, them = home ? as : hs, opp = home ? a : h, r = us > them ? 'W' : us < them ? 'L' : 'D';
+    return `<div class="res"><div class="wdl ${r}">${r}</div><div class="date">${fmtDate(date)}</div><div>${home ? 'v' : '@'} ${esc(T[opp].short)}</div><div class="score">${us}–${them}</div></div>`;
+  }).join('');
+
+  document.getElementById('foot').textContent = `Data from GotSport, pulled ${fmtDate(D.asOf)}.${D.played.some(g => g[5]) ? ' Scores marked team-reported in the bracket are not on GotSport yet, so this table can differ from theirs.' : ''} Predictions come from a simple goals model fitted to this season's ${D.played.length} league games, with winning margins limited to ${GD_CAP} goals so blowouts don't dominate. It ignores home field, injuries and who shows up, so treat it as a rough guide, not a forecast. A tied playoff game is treated as a 50/50 shootout.`;
+}
+
+// Both semis played: the final is one fixed game, so its odds are exact (draw = 50/50 shootout), not simulated.
+const FIN = D.playoffs.semis.every(s => s.winner) ? D.playoffs.final : null;
+const FIN_ODDS = FIN && odds(MODEL, FIN.home, FIN.away);
+function renderLive() {
+  const sim = simulate(MODEL, locks);
+  if (FIN) for (const id of IDS) {
+    sim.finA[id] = id === FIN.home ? 1 : 0; sim.finB[id] = id === FIN.away ? 1 : 0;
+    sim.champ[id] = id === FIN.home ? FIN_ODDS.H + FIN_ODDS.D / 2 : id === FIN.away ? FIN_ODDS.A + FIN_ODDS.D / 2 : 0;
+  }
+  const top4 = id => sim.pos[id].slice(0, 4).reduce((s, p) => s + p, 0);
+  document.getElementById('big').innerHTML = `${pct(sim.champ[D.focus])}<small>chance ${esc(focusShort)} win the title</small>`;
+  document.getElementById('sub').textContent = FIN ? `Semifinal won ${semiScore(D.playoffs.semis.find(s => [s.home, s.away].includes(D.focus)))} · Final ${focusShort} v ${T[FIN.home === D.focus ? FIN.away : FIN.home].short}, ${fmtDate(D.playoffs.finalDate)} ${D.playoffs.finalAt}` : `#1 seed ${pct(sim.pos[D.focus][0])} · Playoffs ${pct(top4(D.focus))} · Reach the final ${pct(sim.finA[D.focus] + sim.finB[D.focus])}`;
+
+  if (FOCUS_GAME >= 0) {
+    const [h] = D.remaining[FOCUS_GAME], home = h === D.focus;
+    const opp = T[D.remaining[FOCUS_GAME][home ? 1 : 0]].short;
+    const scen = [['Win', home ? 'H' : 'A'], ['Draw', 'D'], ['Loss', home ? 'A' : 'H']].map(([label, v]) => {
+      const s = simulate(MODEL, { ...locks, [FOCUS_GAME]: v }, 8000, 7), p = s.pos[D.focus][0];
+      return `<div class="row"><div class="lbl">${label}</div><div class="bar"><i style="width:${p * 100}%"></i></div><div class="pct">${pct(p)}</div></div>`;
+    }).join('');
+    document.getElementById('scen').innerHTML = `<div class="eyebrow">Chance of the #1 seed after Oct 31 at ${esc(opp)}</div>${scen}`;
+  }
+
+  renderBracket(sim);
+  renderFinal();
+
+  const heat = p => `<td class="heat"><span style="background:color-mix(in srgb, var(--pitch) ${Math.round(p * 85)}%, transparent);color:${p > .45 ? 'var(--surface)' : 'var(--ink)'}">${pct(p)}</span></td>`;
+  const order = IDS.slice().sort((x, y) => sim.champ[y] - sim.champ[x] || sim.pos[y].reduce((s, p, i) => s - p * i, 0) - sim.pos[x].reduce((s, p, i) => s - p * i, 0));
+  document.getElementById('proj').innerHTML =
+    '<tr><th class="l">Team</th><th>Proj pts</th><th>#1</th><th>#2</th><th>#3</th><th>#4</th><th>Playoffs</th><th>Final</th><th>Title</th></tr>' +
+    order.map(id => `<tr class="${id === D.focus ? 'focus' : ''}">${teamCell(id)}<td class="pts">${sim.pts[id].toFixed(1)}</td>${
+      [0, 1, 2, 3].map(i => heat(sim.pos[id][i])).join('')}${heat(top4(id))}${heat(sim.finA[id] + sim.finB[id])}${heat(sim.champ[id])}</tr>`).join('');
+}
+
+// Rounds = match weekends (Saturday of each Mon–Sun week). A postponed game goes back into the earliest
+// round both teams sat out, so the bracket shows it where it belonged.
+const satOf = d => { const t = new Date(d + 'T12:00:00'); t.setDate(t.getDate() - (t.getDay() + 6) % 7 + 5); return t.toISOString().slice(0, 10); };
+const ROUNDS = [...new Set(D.played.map(g => satOf(g[4])))].sort().map(sat => [sat, []]);
+for (const g of D.played.slice().sort((x, y) => x[4].localeCompare(y[4]))) {
+  const r = ROUNDS.find(([sat, gs]) => sat <= satOf(g[4]) && !gs.some(x => x.includes(g[0]) || x.includes(g[1])));
+  (r || ROUNDS.find(([sat]) => sat === satOf(g[4])))[1].push(g);
+}
+for (const r of ROUNDS) if (!r[1].length) ROUNDS.splice(ROUNDS.indexOf(r), 1);
+
+const semiScore = s => s.homeScore == null ? 'W' : `${s.homeScore}–${s.awayScore}`;
+function renderFinal() {
+  const el = document.getElementById('final'); el.hidden = !FIN; if (!FIN) return;
+  const { home: h, away: a } = FIN, o = FIN_ODDS, N = id => esc(T[id].short);
+  el.innerHTML = `<h2>Final: ${N(h)} v ${N(a)}</h2><p class="note">${fmtDate(D.playoffs.finalDate)} · ${esc(D.playoffs.finalAt)}</p>
+    <div class="odds" role="img" aria-label="${N(h)} win ${pct(o.H)}, draw ${pct(o.D)}, ${N(a)} win ${pct(o.A)}"><span class="h" style="width:${o.H * 100}%">${pct(o.H)}</span><span class="d" style="width:${o.D * 100}%">${pct(o.D)}</span><span class="a" style="width:${o.A * 100}%">${pct(o.A)}</span></div>
+    <div class="note">Normal time: ${N(h)} win ${pct(o.H)} · draw ${pct(o.D)} · ${N(a)} win ${pct(o.A)}. A draw goes to a 50/50 shootout.</div>
+    <div class="tbl"><table><tr><th class="l">Team</th><th>Expected goals</th><th>Title</th></tr>
+    ${[[h, a, o.H], [a, h, o.A]].map(([x, y, w]) => `<tr class="${x === D.focus ? 'focus' : ''}"><td class="l team">${N(x)}</td><td>${MODEL.lam(x, y).toFixed(1)}</td><td class="pts">${pct(w + o.D / 2)}</td></tr>`).join('')}</table></div>`;
+}
+
+function renderBracket(sim) {
+  const side = (id, cls, val) => `<div class="side ${cls}"><span>${esc(T[id].short)}</span><b>${val}</b></div>`;
+  const pickSide = (gi, id, v, o) => {
+    const cls = locks[gi] === v ? 'win' : locks[gi] === 'D' ? 'draw' : '';
+    return `<button type="button" class="side ${cls}" data-gi="${gi}" data-v="${v}" aria-pressed="${locks[gi] === v}"><span>${esc(T[id].short)}</span><b>${locks[gi] === v ? 'W' : locks[gi] === 'D' ? 'D' : pct(o)}</b></button>`;
+  };
+  const picks = D.remaining.map(([h, a], gi) => { const o = odds(MODEL, h, a);
+    return `<div class="mcard${h === D.focus || a === D.focus ? ' focus' : ''}">${pickSide(gi, h, 'H', o.H)}${pickSide(gi, a, 'A', o.A)}</div>`; }).join('');
+  // A half-reported weekend stays one round: its unscored games sit in the same column as its results.
+  const openRound = D.remaining.length ? ROUNDS.findIndex(([sat]) => sat === satOf(D.remaining[0][2])) : -1;
+  let sofar = [];
+  const cols = ROUNDS.map(([sat, games], ri) => {
+    sofar = sofar.concat(games);
+    const top = standings(sofar)[0];
+    return `<div class="round"><h3>Round ${ri + 1} · ${fmtDate(sat)}</h3><div class="lead">${ri === openRound ? 'Leader so far' : 'Leader after'}: <b>${esc(T[top.id].short)}</b> (${top.pts} pts)</div>` + (ri === openRound ? picks : '') +
+      games.map(([h, a, hs, as, d, manual]) => `<div class="mcard${h === D.focus || a === D.focus ? ' focus' : ''}">${side(h, hs > as ? 'win' : hs === as ? 'draw' : '', hs)}${side(a, as > hs ? 'win' : hs === as ? 'draw' : '', as)}${satOf(d) !== sat ? `<div class="moved">Played ${fmtDate(d)}</div>` : ''}${manual ? '<div class="moved">Team-reported, not on GotSport yet</div>' : ''}</div>`).join('') + '</div>';
+  });
+  if (D.remaining.length && openRound < 0) cols.push(`<div class="round"><h3>Round ${ROUNDS.length + 1} · ${fmtDate(D.remaining[0][2])}</h3><div class="lead">Still to play. Odds shown until you pick.</div>${picks}</div>`);
+  // Playoff slots: show the likeliest team for each seed / semi winner, with how often they land there.
+  const likeliest = f => IDS.reduce((b, id) => f(id) > f(b) ? id : b);
+  const slot = (label, f) => { const id = likeliest(f);
+    return `<div class="side${id === D.focus ? ' win' : ''}"><span>${label} ${esc(T[id].short)}</span><b>${pct(f(id))}</b></div>`; };
+  const isFocus = (...fs) => fs.some(f => likeliest(f) === D.focus) ? ' focus' : '';
+  const seed = k => id => sim.pos[id][k], fa = id => sim.finA[id], fb = id => sim.finB[id];
+  const semiCard = s => { const w = s.winner, sc = id => id === s.home ? s.homeScore : s.awayScore;
+    const row = id => `<div class="side${w === id ? ' win' : ''}"><span>${esc(T[id].short)}</span><b>${w && sc(id) != null ? sc(id) : w === id ? 'W' : ''}</b></div>`;
+    return `<div class="mcard${s.home === D.focus || s.away === D.focus ? ' focus' : ''}">${row(s.home)}${row(s.away)}${s.source === 'team-reported' ? '<div class="moved">Team-reported, not on GotSport</div>' : ''}</div>`; };
+  const known = D.playoffs.semis.length === 2 && D.playoffs.semis.every(s => s.winner);
+  cols.push(`<div class="round"><h3>Semifinals · ${fmtDate(D.playoffs.semisDate)}</h3><div class="lead">${known ? 'Played. Winners go to the final.' : 'Top 4. Likeliest team per seed, with odds.'}</div>` + (known ? D.playoffs.semis.map(semiCard).join('') :
+    `<div class="mcard${isFocus(seed(0), seed(3))}">${slot('#1', seed(0))}${slot('#4', seed(3))}</div>` +
+    `<div class="mcard${isFocus(seed(1), seed(2))}">${slot('#2', seed(1))}${slot('#3', seed(2))}</div>`) + '</div>');
+  cols.push(`<div class="round"><h3>Final · ${fmtDate(D.playoffs.finalDate)}</h3><div class="lead">${esc(D.playoffs.finalAt)}${FIN ? ' · finalists confirmed' : ''}</div>` +
+    (FIN ? `<div class="mcard${FIN.home === D.focus || FIN.away === D.focus ? ' focus' : ''}">${[FIN.home, FIN.away].map(id => `<div class="side${id === D.focus ? ' win' : ''}"><span>${esc(T[id].short)}</span><b>${pct(sim.champ[id])}</b></div>`).join('')}</div>`
+    : `<div class="mcard${isFocus(fa, fb)}">${slot('', fa)}${slot('', fb)}</div>`) + '</div>');
+  const ranked = IDS.slice().sort((x, y) => sim.champ[y] - sim.champ[x]);
+  cols.push(`<div class="round"><h3>Champion</h3><div class="lead">${FIN ? 'Title odds, normal time then shootout' : 'Most likely to win the final'}</div><div class="champ"><div class="name">${esc(T[ranked[0]].short)}</div><div class="p">${pct(sim.champ[ranked[0]])}</div>` +
+    `<ol>${ranked.slice(1).filter(id => sim.champ[id] >= .005).map(id => `<li>${esc(T[id].short)} ${pct(sim.champ[id])}</li>`).join('')}</ol></div></div>`);
+  document.getElementById('bracket').innerHTML = cols.join('');
+}
+
+document.getElementById('bracket').addEventListener('click', e => {
+  const b = e.target.closest('button[data-gi]'); if (!b) return;
+  const gi = +b.dataset.gi, v = locks[gi] === b.dataset.v ? '' : b.dataset.v;
+  if (v) locks[gi] = v; else delete locks[gi];
+  document.getElementById(`g${gi}-${v}`).checked = true;
+  renderLive();
+});
+document.getElementById('games').addEventListener('change', e => {
+  const gi = +e.target.name.slice(1);
+  if (e.target.value) locks[gi] = e.target.value; else delete locks[gi];
+  renderLive();
+});
+document.getElementById('reset').addEventListener('click', () => {
+  for (const k in locks) delete locks[k];
+  document.querySelectorAll('#games input[value=""]').forEach(i => { i.checked = true; });
+  renderLive();
+});
+renderStatic();
+renderLive();
+</script>
