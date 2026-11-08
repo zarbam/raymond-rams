@@ -120,7 +120,7 @@ button.reset { justify-self: start; font: 600 .85rem var(--body); color: var(--p
 <div class="wrap">
   <header class="hero">
     <div class="eyebrow" id="ctx" style="grid-column:1/-1"></div>
-    <h1>Can the <span>Rams</span> win Coastal Red?</h1>
+    <h1 id="h1">Can the <span>Rams</span> win Coastal Red?</h1>
     <div class="big num" id="big"></div>
     <div class="eyebrow" id="sub" style="grid-column:1/-1"></div>
     <div class="scen" id="scen"></div>
@@ -162,7 +162,7 @@ button.reset { justify-self: start; font: 600 .85rem var(--body); color: var(--p
 </div>
 
 <script id="core">
-const D = {"asOf": "2026-11-07", "event": "New Hampshire Soccer League - Fall 2026 (SCHOOL YEAR)", "division": "U12B Coastal Red", "focus": 4360002, "teams": [{"id": 4360002, "team": "Raymond Soccer Club U12 Boys", "club": "Raymond Soccer Club", "short": "Raymond Rams", "gsPts": 18, "gsPlace": 1}, {"id": 4374560, "team": "U12 26/27 Boys Premier", "club": "York Soccer Club", "short": "York SC", "gsPts": 16, "gsPlace": 2}, {"id": 4352535, "team": "U12 Boys - Fall 2026", "club": "Warriors FC-Hampton Youth Association", "short": "Warriors FC", "gsPts": 16, "gsPlace": 3}, {"id": 4362331, "team": "U12 Boys 1", "club": "Garrison City FC", "short": "Garrison City", "gsPts": 14, "gsPlace": 4}, {"id": 4342876, "team": "PCSC U-12 Boys Black", "club": "Portsmouth City SC", "short": "Portsmouth City", "gsPts": 9, "gsPlace": 5}, {"id": 4331313, "team": "U12 Boys", "club": "Wells Soccer Club", "short": "Wells SC", "gsPts": 6, "gsPlace": 6}, {"id": 4305716, "team": "Boys U12 Blue", "club": "Exeter Youth Soccer Association - FC Exeter", "short": "FC Exeter", "gsPts": 3, "gsPlace": 7}, {"id": 4355101, "team": "ORU Boys U12 (Fall 26)", "club": "Oyster River United", "short": "Oyster River", "gsPts": 0, "gsPlace": 8}], "played": [[4360002, 4374560, 4, 1, "2026-10-24"], [4360002, 4331313, 8, 1, "2026-09-26"], [4360002, 4362331, 6, 3, "2026-09-12"], [4360002, 4355101, 9, 1, "2026-10-03"], [4352535, 4331313, 7, 0, "2026-10-31"], [4352535, 4362331, 1, 1, "2026-09-26"], [4352535, 4374560, 1, 2, "2026-09-12"], [4352535, 4360002, 2, 0, "2026-10-17"], [4374560, 4355101, 8, 1, "2026-10-31"], [4374560, 4342876, 4, 3, "2026-09-26"], [4374560, 4305716, 4, 0, "2026-10-17"], [4331313, 4374560, 0, 5, "2026-09-19"], [4331313, 4342876, 0, 6, "2026-10-03"], [4331313, 4362331, 0, 2, "2026-10-24"], [4362331, 4355101, 10, 3, "2026-09-19"], [4362331, 4374560, 3, 3, "2026-10-03"], [4362331, 4305716, 7, 1, "2026-10-31"], [4355101, 4305716, 2, 3, "2026-10-15"], [4355101, 4331313, 3, 5, "2026-10-17"], [4355101, 4342876, 4, 9, "2026-09-12"], [4355101, 4352535, 0, 7, "2026-10-24"], [4305716, 4360002, 0, 6, "2026-09-19"], [4305716, 4331313, 1, 5, "2026-09-12"], [4342876, 4360002, 0, 1, "2026-10-31"], [4342876, 4362331, 2, 5, "2026-10-17"], [4342876, 4352535, 1, 3, "2026-09-19"], [4305716, 4342876, 3, 10, "2026-10-24"], [4305716, 4352535, 1, 12, "2026-10-03"]], "remaining": [], "playoffs": {"semisDate": "2026-11-07", "finalDate": "2026-11-08", "finalAt": "3:45 PM \u00b7 NHSA State Fields, Field 3A", "semis": [{"home": 4360002, "away": 4362331, "homeScore": 3, "awayScore": 1, "winner": 4360002, "source": "team-reported"}, {"home": 4374560, "away": 4352535, "homeScore": null, "awayScore": null, "winner": 4374560, "source": "team-reported"}], "final": {"home": 4360002, "away": 4374560}}};
+const D = {"asOf": "2026-11-08", "event": "New Hampshire Soccer League - Fall 2026 (SCHOOL YEAR)", "division": "U12B Coastal Red", "focus": 4360002, "teams": [{"id": 4360002, "team": "Raymond Soccer Club U12 Boys", "club": "Raymond Soccer Club", "short": "Raymond Rams", "gsPts": 18, "gsPlace": 1}, {"id": 4374560, "team": "U12 26/27 Boys Premier", "club": "York Soccer Club", "short": "York SC", "gsPts": 16, "gsPlace": 2}, {"id": 4352535, "team": "U12 Boys - Fall 2026", "club": "Warriors FC-Hampton Youth Association", "short": "Warriors FC", "gsPts": 16, "gsPlace": 3}, {"id": 4362331, "team": "U12 Boys 1", "club": "Garrison City FC", "short": "Garrison City", "gsPts": 14, "gsPlace": 4}, {"id": 4342876, "team": "PCSC U-12 Boys Black", "club": "Portsmouth City SC", "short": "Portsmouth City", "gsPts": 9, "gsPlace": 5}, {"id": 4331313, "team": "U12 Boys", "club": "Wells Soccer Club", "short": "Wells SC", "gsPts": 6, "gsPlace": 6}, {"id": 4305716, "team": "Boys U12 Blue", "club": "Exeter Youth Soccer Association - FC Exeter", "short": "FC Exeter", "gsPts": 3, "gsPlace": 7}, {"id": 4355101, "team": "ORU Boys U12 (Fall 26)", "club": "Oyster River United", "short": "Oyster River", "gsPts": 0, "gsPlace": 8}], "played": [[4360002, 4374560, 4, 1, "2026-10-24"], [4360002, 4331313, 8, 1, "2026-09-26"], [4360002, 4362331, 6, 3, "2026-09-12"], [4360002, 4355101, 9, 1, "2026-10-03"], [4352535, 4331313, 7, 0, "2026-10-31"], [4352535, 4362331, 1, 1, "2026-09-26"], [4352535, 4374560, 1, 2, "2026-09-12"], [4352535, 4360002, 2, 0, "2026-10-17"], [4374560, 4355101, 8, 1, "2026-10-31"], [4374560, 4342876, 4, 3, "2026-09-26"], [4374560, 4305716, 4, 0, "2026-10-17"], [4331313, 4374560, 0, 5, "2026-09-19"], [4331313, 4342876, 0, 6, "2026-10-03"], [4331313, 4362331, 0, 2, "2026-10-24"], [4362331, 4355101, 10, 3, "2026-09-19"], [4362331, 4374560, 3, 3, "2026-10-03"], [4362331, 4305716, 7, 1, "2026-10-31"], [4355101, 4305716, 2, 3, "2026-10-15"], [4355101, 4331313, 3, 5, "2026-10-17"], [4355101, 4342876, 4, 9, "2026-09-12"], [4355101, 4352535, 0, 7, "2026-10-24"], [4305716, 4360002, 0, 6, "2026-09-19"], [4305716, 4331313, 1, 5, "2026-09-12"], [4342876, 4360002, 0, 1, "2026-10-31"], [4342876, 4362331, 2, 5, "2026-10-17"], [4342876, 4352535, 1, 3, "2026-09-19"], [4305716, 4342876, 3, 10, "2026-10-24"], [4305716, 4352535, 1, 12, "2026-10-03"]], "remaining": [], "playoffs": {"semisDate": "2026-11-07", "finalDate": "2026-11-08", "finalAt": "3:45 PM \u00b7 NHSA State Fields, Field 3A", "semis": [{"home": 4360002, "away": 4362331, "homeScore": 3, "awayScore": 1, "winner": 4360002, "source": "gotsport"}, {"home": 4374560, "away": 4352535, "homeScore": 2, "awayScore": 1, "winner": 4374560, "source": "gotsport"}], "final": {"home": 4360002, "away": 4374560, "homeScore": 1, "awayScore": 0, "winner": 4360002, "source": "team-reported"}}};
 const T = Object.fromEntries(D.teams.map(t => [t.id, t]));
 const IDS = D.teams.map(t => t.id);
 
@@ -293,15 +293,21 @@ function renderStatic() {
 // Both semis played: the final is one fixed game, so its odds are exact (draw = 50/50 shootout), not simulated.
 const FIN = D.playoffs.semis.every(s => s.winner) ? D.playoffs.final : null;
 const FIN_ODDS = FIN && odds(MODEL, FIN.home, FIN.away);
+const DONE = FIN && FIN.winner ? FIN : null; // final played: champions view
+const PRE = DONE && (DONE.winner === DONE.home ? FIN_ODDS.H : FIN_ODDS.A) + FIN_ODDS.D / 2; // model's title chance before the game
 function renderLive() {
   const sim = simulate(MODEL, locks);
   if (FIN) for (const id of IDS) {
     sim.finA[id] = id === FIN.home ? 1 : 0; sim.finB[id] = id === FIN.away ? 1 : 0;
-    sim.champ[id] = id === FIN.home ? FIN_ODDS.H + FIN_ODDS.D / 2 : id === FIN.away ? FIN_ODDS.A + FIN_ODDS.D / 2 : 0;
+    sim.champ[id] = DONE ? +(id === DONE.winner) : id === FIN.home ? FIN_ODDS.H + FIN_ODDS.D / 2 : id === FIN.away ? FIN_ODDS.A + FIN_ODDS.D / 2 : 0;
   }
   const top4 = id => sim.pos[id].slice(0, 4).reduce((s, p) => s + p, 0);
+  if (DONE && DONE.winner === D.focus) {
+    document.getElementById('h1').innerHTML = '<span>Raymond Rams</span> are Coastal Red champions!';
+    document.getElementById('big').innerHTML = `<span style="font-size:.6em">🏆</span><small style="font-size:.25em">${esc(focusShort)} ${DONE.homeScore}–${DONE.awayScore} ${esc(T[DONE.home === D.focus ? DONE.away : DONE.home].short)} in the final</small>`;
+  } else
   document.getElementById('big').innerHTML = `${pct(sim.champ[D.focus])}<small>chance ${esc(focusShort)} win the title</small>`;
-  document.getElementById('sub').textContent = FIN ? `Semifinal won ${semiScore(D.playoffs.semis.find(s => [s.home, s.away].includes(D.focus)))} · Final ${focusShort} v ${T[FIN.home === D.focus ? FIN.away : FIN.home].short}, ${fmtDate(D.playoffs.finalDate)} ${D.playoffs.finalAt}` : `#1 seed ${pct(sim.pos[D.focus][0])} · Playoffs ${pct(top4(D.focus))} · Reach the final ${pct(sim.finA[D.focus] + sim.finB[D.focus])}`;
+  document.getElementById('sub').textContent = DONE ? `A ${DONE.homeScore}–${DONE.awayScore} win in the final on ${fmtDate(D.playoffs.finalDate)}. What a season! What the model said: before the final, ${pct(PRE)} title chance.` : FIN ? `Semifinal won ${semiScore(D.playoffs.semis.find(s => [s.home, s.away].includes(D.focus)))} · Final ${focusShort} v ${T[FIN.home === D.focus ? FIN.away : FIN.home].short}, ${fmtDate(D.playoffs.finalDate)} ${D.playoffs.finalAt}` : `#1 seed ${pct(sim.pos[D.focus][0])} · Playoffs ${pct(top4(D.focus))} · Reach the final ${pct(sim.finA[D.focus] + sim.finB[D.focus])}`;
 
   if (FOCUS_GAME >= 0) {
     const [h] = D.remaining[FOCUS_GAME], home = h === D.focus;
@@ -321,7 +327,7 @@ function renderLive() {
   document.getElementById('proj').innerHTML =
     '<tr><th class="l">Team</th><th>Proj pts</th><th>#1</th><th>#2</th><th>#3</th><th>#4</th><th>Playoffs</th><th>Final</th><th>Title</th></tr>' +
     order.map(id => `<tr class="${id === D.focus ? 'focus' : ''}">${teamCell(id)}<td class="pts">${sim.pts[id].toFixed(1)}</td>${
-      [0, 1, 2, 3].map(i => heat(sim.pos[id][i])).join('')}${heat(top4(id))}${heat(sim.finA[id] + sim.finB[id])}${heat(sim.champ[id])}</tr>`).join('');
+      [0, 1, 2, 3].map(i => heat(sim.pos[id][i])).join('')}${heat(top4(id))}${heat(sim.finA[id] + sim.finB[id])}${DONE ? (sim.champ[id] ? '<td class="pts">Champion 🏆</td>' : '<td>–</td>') : heat(sim.champ[id])}</tr>`).join('');
 }
 
 // Rounds = match weekends (Saturday of each Mon–Sun week). A postponed game goes back into the earliest
@@ -338,6 +344,9 @@ const semiScore = s => s.homeScore == null ? 'W' : `${s.homeScore}–${s.awaySco
 function renderFinal() {
   const el = document.getElementById('final'); el.hidden = !FIN; if (!FIN) return;
   const { home: h, away: a } = FIN, o = FIN_ODDS, N = id => esc(T[id].short);
+  if (DONE) { el.innerHTML = `<h2>Final: ${N(h)} ${DONE.homeScore}–${DONE.awayScore} ${N(a)}</h2><p class="note">${fmtDate(D.playoffs.finalDate)} · ${esc(D.playoffs.finalAt)}</p>
+    <div class="mcard focus">${[h, a].map(id => `<div class="side${id === DONE.winner ? ' win' : ''}"><span>${N(id)}</span><b>${id === h ? DONE.homeScore : DONE.awayScore}</b></div>`).join('')}${DONE.source === 'team-reported' ? '<div class="moved">Team-reported, not on GotSport yet</div>' : ''}</div>
+    <div class="note">${N(DONE.winner)} are the champions. What the model said: before the final, ${N(h)} had a ${pct(o.H + o.D / 2)} title chance and ${N(a)} ${pct(o.A + o.D / 2)}.</div>`; return; }
   el.innerHTML = `<h2>Final: ${N(h)} v ${N(a)}</h2><p class="note">${fmtDate(D.playoffs.finalDate)} · ${esc(D.playoffs.finalAt)}</p>
     <div class="odds" role="img" aria-label="${N(h)} win ${pct(o.H)}, draw ${pct(o.D)}, ${N(a)} win ${pct(o.A)}"><span class="h" style="width:${o.H * 100}%">${pct(o.H)}</span><span class="d" style="width:${o.D * 100}%">${pct(o.D)}</span><span class="a" style="width:${o.A * 100}%">${pct(o.A)}</span></div>
     <div class="note">Normal time: ${N(h)} win ${pct(o.H)} · draw ${pct(o.D)} · ${N(a)} win ${pct(o.A)}. A draw goes to a 50/50 shootout.</div>
@@ -376,12 +385,12 @@ function renderBracket(sim) {
   cols.push(`<div class="round"><h3>Semifinals · ${fmtDate(D.playoffs.semisDate)}</h3><div class="lead">${known ? 'Played. Winners go to the final.' : 'Top 4. Likeliest team per seed, with odds.'}</div>` + (known ? D.playoffs.semis.map(semiCard).join('') :
     `<div class="mcard${isFocus(seed(0), seed(3))}">${slot('#1', seed(0))}${slot('#4', seed(3))}</div>` +
     `<div class="mcard${isFocus(seed(1), seed(2))}">${slot('#2', seed(1))}${slot('#3', seed(2))}</div>`) + '</div>');
-  cols.push(`<div class="round"><h3>Final · ${fmtDate(D.playoffs.finalDate)}</h3><div class="lead">${esc(D.playoffs.finalAt)}${FIN ? ' · finalists confirmed' : ''}</div>` +
-    (FIN ? `<div class="mcard${FIN.home === D.focus || FIN.away === D.focus ? ' focus' : ''}">${[FIN.home, FIN.away].map(id => `<div class="side${id === D.focus ? ' win' : ''}"><span>${esc(T[id].short)}</span><b>${pct(sim.champ[id])}</b></div>`).join('')}</div>`
+  cols.push(`<div class="round"><h3>Final · ${fmtDate(D.playoffs.finalDate)}</h3><div class="lead">${esc(D.playoffs.finalAt)}${DONE ? ' · played' : FIN ? ' · finalists confirmed' : ''}</div>` +
+    (FIN ? `<div class="mcard${FIN.home === D.focus || FIN.away === D.focus ? ' focus' : ''}">${[FIN.home, FIN.away].map(id => `<div class="side${id === (DONE ? DONE.winner : D.focus) ? ' win' : ''}"><span>${esc(T[id].short)}</span><b>${DONE ? (id === FIN.home ? FIN.homeScore : FIN.awayScore) : pct(sim.champ[id])}</b></div>`).join('')}</div>`
     : `<div class="mcard${isFocus(fa, fb)}">${slot('', fa)}${slot('', fb)}</div>`) + '</div>');
   const ranked = IDS.slice().sort((x, y) => sim.champ[y] - sim.champ[x]);
-  cols.push(`<div class="round"><h3>Champion</h3><div class="lead">${FIN ? 'Title odds, normal time then shootout' : 'Most likely to win the final'}</div><div class="champ"><div class="name">${esc(T[ranked[0]].short)}</div><div class="p">${pct(sim.champ[ranked[0]])}</div>` +
-    `<ol>${ranked.slice(1).filter(id => sim.champ[id] >= .005).map(id => `<li>${esc(T[id].short)} ${pct(sim.champ[id])}</li>`).join('')}</ol></div></div>`);
+  cols.push(`<div class="round"><h3>Champion</h3><div class="lead">${DONE ? 'Champions 🏆' : FIN ? 'Title odds, normal time then shootout' : 'Most likely to win the final'}</div><div class="champ"><div class="name">${esc(T[ranked[0]].short)}</div><div class="p">${DONE ? '🏆' : pct(sim.champ[ranked[0]])}</div>` +
+    `<ol>${(DONE ? [] : ranked.slice(1)).filter(id => sim.champ[id] >= .005).map(id => `<li>${esc(T[id].short)} ${pct(sim.champ[id])}</li>`).join('')}</ol></div></div>`);
   document.getElementById('bracket').innerHTML = cols.join('');
 }
 
